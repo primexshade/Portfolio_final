@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #0D1117;
+  --text-dark: #C9D1D9;
+  --accent-dark: #2F81F7;
+
+  --bg-light: #F5F5F5;
+  --text-light: #1A1A1A;
+  --accent-light: #0078D4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[var(--bg-dark)] text-[var(--text-dark)] dark:bg-[var(--bg-dark)] dark:text-[var(--text-dark)] font-inter;
+  /* Add safe area for iOS devices */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Reusable utility classes */
+.container-px { @apply px-4 sm:px-6 lg:px-8; }
+.section { @apply container-px py-12 sm:py-16 lg:py-24; }
+.card { @apply rounded-xl bg-white/5 dark:bg-white/5 backdrop-blur shadow-soft border border-white/10; }
+.btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition-colors duration-200; }
+.btn-primary { @apply btn bg-accent text-white hover:bg-accent/90; }
+.btn-ghost { @apply btn bg-transparent border border-white/10 hover:bg-white/10; }
+
+/* Light mode overrides */
+.light body { @apply bg-[var(--bg-light)] text-[var(--text-light)]; }
+
+/* Aurora Background Animations - Apple Sonoma style */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  33% { transform: translate(30px, -40px) scale(1.05); opacity: 0.25; }
+  66% { transform: translate(-20px, 30px) scale(0.95); opacity: 0.18; }
+}
+
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+  25% { transform: translate(-40px, 30px) scale(1.08); opacity: 0.2; }
+  50% { transform: translate(20px, -20px) scale(0.92); opacity: 0.12; }
+  75% { transform: translate(30px, 40px) scale(1.02); opacity: 0.18; }
+}
+
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.18; }
+  40% { transform: translate(50px, 20px) scale(1.1); opacity: 0.22; }
+  80% { transform: translate(-30px, -30px) scale(0.9); opacity: 0.15; }
+}
+
+@keyframes aurora-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+  30% { transform: translate(-25px, -35px) scale(1.06); opacity: 0.16; }
+  60% { transform: translate(35px, 25px) scale(0.94); opacity: 0.1; }
+}
+
+.animate-aurora-1 { animation: aurora-1 35s ease-in-out infinite; }
+.animate-aurora-2 { animation: aurora-2 40s ease-in-out infinite; }
+.animate-aurora-3 { animation: aurora-3 28s ease-in-out infinite; }
+.animate-aurora-4 { animation: aurora-4 32s ease-in-out infinite; }
+
+/* Apple-style shimmer for active nav links */
+@keyframes nav-shimmer {
+  0%, 100% { opacity: 0.5; transform: translateX(-100%); }
+  50% { opacity: 1; transform: translateX(100%); }
+}
+
+.nav-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(47, 129, 247, 0.8), transparent);
+  animation: nav-shimmer 3s ease-in-out infinite;
+}
+
+/* Gradient Cloud Drift Animations - Vision Pro style */
+@keyframes cloud-drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(80px, 30px); }
+}
+
+@keyframes cloud-drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-70px, -20px); }
+}
+
+@keyframes cloud-drift-3 {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(calc(-50% + 60px), calc(-50% + 40px)); }
+}
+
+@keyframes cloud-drift-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(50px, -35px); }
+}
+
+.animate-cloud-drift-1 { animation: cloud-drift-1 45s ease-in-out infinite; }
+.animate-cloud-drift-2 { animation: cloud-drift-2 50s ease-in-out infinite; }
+.animate-cloud-drift-3 { animation: cloud-drift-3 55s ease-in-out infinite; }
+.animate-cloud-drift-4 { animation: cloud-drift-4 48s ease-in-out infinite; }
+
+/* Mobile optimizations - reduce blur and effects for performance */
+@media (max-width: 768px) {
+  .backdrop-blur-3xl { @apply backdrop-blur-xl; }
+  .blur-3xl { @apply blur-xl; }
+  /* Reduce parallax intensity on mobile */
+  .parallax-mobile { transform: translateZ(0) !important; }
+}

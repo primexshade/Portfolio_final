@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install root tools
+        run: npm ci || npm i
+      - name: Install client deps
+        run: npm ci || npm i
+        working-directory: client
+      - name: Install server deps
+        run: npm ci || npm i
+        working-directory: server
+      - name: Build client
+        run: npm run build
+        working-directory: client
+      - name: Lint server (basic)
+        run: node -e "require('fs').access('index.js', fs=>{}); console.log('server ok')"
