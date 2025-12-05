@@ -104,14 +104,14 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }) {
             
             {/* Centered mobile menu */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 md:hidden"
+              className="fixed inset-0 flex items-center justify-center z-50 md:hidden px-4 sm:px-6"
             >
-              <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
-                <div className="px-6 sm:px-8 py-6 sm:py-8 flex flex-col gap-2">
+              <div className="w-full max-w-sm bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="px-6 sm:px-8 py-8 sm:py-10 flex flex-col gap-2">
                   {NAV_LINKS.map((l, i) => (
                     <motion.div
                       key={l.path}
