@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Code2, Award, Briefcase, GraduationCap, Download, Trophy, Target } from 'lucide-react'
+import { Code2, Trophy, Briefcase, GraduationCap, Download, Target } from 'lucide-react'
 import { useRef } from 'react'
 import { PERSONAL_DATA, SKILLS, EXPERIENCE, ACHIEVEMENTS, EDUCATION } from '../utils/constants'
 
@@ -91,8 +91,8 @@ export default function AboutSection() {
                     <h3 className="font-semibold text-lg sm:text-xl text-white truncate px-2">{PERSONAL_DATA.name}</h3>
                     <p className="text-xs sm:text-sm text-white/70 line-clamp-2 px-2">{PERSONAL_DATA.title}</p>
                     <div className="flex items-center justify-center gap-2 text-xs text-white/60">
-                      <Award size={14} className="text-accent flex-shrink-0" />
-                      <span className="whitespace-nowrap">CGPA: {EDUCATION.cgpa}</span>
+                      <Trophy size={14} className="text-accent flex-shrink-0" />
+                      <span className="whitespace-nowrap">Credit Score: 89</span>
                     </div>
                   </div>
 
