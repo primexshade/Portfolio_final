@@ -108,7 +108,7 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-0 flex items-center justify-center z-50 md:hidden px-6"
+              className="fixed top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 md:hidden px-6"
             >
               <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl w-full max-w-xs">
                 <div className="p-5 flex flex-col gap-1">
