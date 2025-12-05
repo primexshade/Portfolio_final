@@ -7,14 +7,45 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
  */
 const ThemeContext = createContext({ theme: 'dark', toggleTheme: () => {} })
 
+const isLocalStorageAvailable = () => {
+  if (typeof window === 'undefined') return false
+  try {
+    const testKey = '__test__'
+    localStorage.setItem(testKey, testKey)
+    localStorage.removeItem(testKey)
+    return true
+  } catch (e) {
+    console.warn('localStorage is not available:', e)
+    return false
+  }
+}
+
+const getStoredTheme = () => {
+  try {
+    if (isLocalStorageAvailable()) {
+      return localStorage.getItem('theme') || 'dark'
+    }
+  } catch (e) {
+    console.warn('Failed to read theme from localStorage:', e)
+  }
+  return 'dark'
+}
+
+const setStoredTheme = (theme) => {
+  try {
+    if (isLocalStorageAvailable()) {
+      localStorage.setItem('theme', theme)
+    }
+  } catch (e) {
+    console.warn('Failed to save theme to localStorage:', e)
+  }
+}
+
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    const stored = typeof window !== 'undefined' ? localStorage.getItem('theme') : null
-    return stored || 'dark'
-  })
+  const [theme, setTheme] = useState(getStoredTheme)
 
   useEffect(() => {
-    localStorage.setItem('theme', theme)
+    setStoredTheme(theme)
     const root = document.documentElement
     if (theme === 'dark') {
       root.classList.add('dark')

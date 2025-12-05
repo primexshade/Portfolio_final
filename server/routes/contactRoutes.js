@@ -1,23 +1,30 @@
 import { Router } from 'express'
-import { body, validationResult } from 'express-validator'
 import { sendContact } from '../controllers/contactController.js'
+import { validateContact, handleValidationErrors, sanitizeRequestBody } from '../middleware/validation.js'
 
 const router = Router()
 
+/**
+ * POST /api/contact
+ * Submit a contact form with enhanced validation and sanitization
+ * 
+ * Request body:
+ * - name: string (required, 2-100 chars, letters/spaces/hyphens/apostrophes only)
+ * - email: string (required, valid email format)
+ * - message: string (required, 10-5000 chars)
+ * - subject: string (optional, max 200 chars)
+ * 
+ * Response:
+ * - success: boolean
+ * - message: string
+ * - errors: array (if validation failed)
+ */
 router.post(
   '/',
-  [
-    body('name').isString().isLength({ min: 1 }).withMessage('name is required'),
-    body('email').isEmail().withMessage('valid email is required'),
-    body('message').isString().isLength({ min: 5 }).withMessage('message must be at least 5 chars'),
-  ],
-  (req, res, next) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ message: 'Validation failed', errors: errors.array() })
-    }
-    return sendContact(req, res, next)
-  }
+  sanitizeRequestBody,
+  validateContact,
+  handleValidationErrors,
+  sendContact
 )
 
 export default router

@@ -2,7 +2,6 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ThemeToggle from './ThemeToggle'
 import { NAV_LINKS } from '../utils/constants'
 
 /** Global navigation bar with glass morphism */
@@ -81,7 +80,7 @@ export default function Navbar() {
           >
             Hire Me
           </Link> */}
-          <ThemeToggle />
+          {/* Theme toggle removed as dark/light mode is not required */}
           
           {/* Mobile menu button */}
           <button
@@ -123,10 +122,6 @@ export default function Navbar() {
                   </NavLink>
                 </motion.div>
               ))}
-              {/* Mobile Hire Me button hidden per request */}
-              {/* <Link to="/contact" className="btn-primary w-full mt-1 text-sm py-2">
-                Hire Me
-              </Link> */}
             </div>
           </motion.div>
         )}

@@ -17,12 +17,12 @@ export default function StatsPage() {
   const headerOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   // GitHub state
-  const [githubUsername, setGithubUsername] = useState('octocat')
+  const [githubUsername, setGithubUsername] = useState('primexshade')
   const [githubProfile, setGithubProfile] = useState(null)
   const [githubError, setGithubError] = useState('')
 
   // LeetCode state
-  const [leetcodeUsername, setLeetcodeUsername] = useState('leetcode')
+  const [leetcodeUsername, setLeetcodeUsername] = useState('primexshade')
   const [leetcodeData, setLeetcodeData] = useState(null)
   const [leetcodeError, setLeetcodeError] = useState('')
 
@@ -49,7 +49,17 @@ export default function StatsPage() {
   ] : []
 
   return (
-    <VisionProLayout>
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.008,
+        scanlineIntensity: 0.07,
+        speed: 0.14,
+        scanlineFrequency: 2,
+        warpAmount: 0.04,
+        resolutionScale: 0.5
+      }}
+    >
       <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 min-h-screen relative z-20">
         <div className="max-w-7xl mx-auto space-y-12">
           {/* Header with parallax */}

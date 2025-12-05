@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@sentry/profiling-node": "^10.29.0"
   }
 }

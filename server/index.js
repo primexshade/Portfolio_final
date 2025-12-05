@@ -3,6 +3,8 @@ import helmet from 'helmet'
 import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import * as Sentry from '@sentry/node'
+import { nodeProfilingIntegration } from '@sentry/profiling-node'
 import { connectDB } from './config/db.js'
 import projectRoutes from './routes/projectRoutes.js'
 import contactRoutes from './routes/contactRoutes.js'
@@ -10,10 +12,35 @@ import { apiLimiter, contactLimiter } from './middleware/rateLimiter.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
 dotenv.config()
+
+// Initialize Sentry BEFORE anything else
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || 'development',
+    tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
+    sampleRate: 1.0,
+    integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Sentry.Integrations.Express({ app: true, request: true }),
+      nodeProfilingIntegration(),
+    ],
+    debug: process.env.NODE_ENV !== 'production',
+    release: '1.0.0',
+    maxBreadcrumbs: 50,
+  })
+}
+
 console.log("🔍 MONGODB_URI:", process.env.MONGODB_URI);
+console.log("🔍 SENTRY_DSN:", process.env.SENTRY_DSN ? '✅ Configured' : '⚠️ Not configured');
 
 const app = express()
 const PORT = process.env.PORT || 5000
+
+// Sentry middleware must be first
+if (process.env.SENTRY_DSN) {
+  app.use(Sentry.Handlers.requestHandler())
+}
 
 // Security & basics
 app.use(helmet())
@@ -40,7 +67,7 @@ app.use('/api/contact', contactLimiter, contactRoutes)
 // Optional proxy: GitHub user
 app.get('/api/github', async (req, res, next) => {
   try {
-    const username = req.query.username || 'octocat'
+    const username = req.query.username || 'primexshade'
     const headers = { 'Accept': 'application/vnd.github+json' }
     if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
     const r = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`, { headers })
@@ -55,12 +82,60 @@ app.get('/api/leetcode', async (req, res, next) => {
   try {
     const username = req.query.username
     if (!username) return res.status(400).json({ message: 'username is required' })
-    const r = await fetch(`https://leetcode-stats-api.herokuapp.com/${encodeURIComponent(username)}`)
-    const data = await r.json()
-    if (!r.ok) return res.status(r.status).json(data)
-    res.json(data)
+    
+    // Using LeetCode GraphQL API
+    const query = `
+      query getUserProfile($username: String!) {
+        matchedUser(username: $username) {
+          submitStats {
+            acSubmissionNum {
+              difficulty
+              count
+            }
+          }
+          profile {
+            ranking
+          }
+        }
+        allQuestionsCount {
+          difficulty
+          count
+        }
+      }
+    `
+    
+    const r = await fetch('https://leetcode.com/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables: { username } })
+    })
+    
+    const result = await r.json()
+    
+    if (result.errors || !result.data?.matchedUser) {
+      return res.status(404).json({ message: 'User not found or API error' })
+    }
+    
+    const stats = result.data.matchedUser.submitStats.acSubmissionNum
+    const allQuestions = result.data.allQuestionsCount
+    
+    const transformedData = {
+      totalSolved: stats.find(s => s.difficulty === 'All')?.count || 0,
+      totalQuestions: allQuestions.find(q => q.difficulty === 'All')?.count || 0,
+      easySolved: stats.find(s => s.difficulty === 'Easy')?.count || 0,
+      mediumSolved: stats.find(s => s.difficulty === 'Medium')?.count || 0,
+      hardSolved: stats.find(s => s.difficulty === 'Hard')?.count || 0,
+      ranking: result.data.matchedUser.profile?.ranking || null
+    }
+    
+    res.json(transformedData)
   } catch (err) { next(err) }
 })
+
+// Sentry error handler (must be after all other middleware/routes)
+if (process.env.SENTRY_DSN) {
+  app.use(Sentry.Handlers.errorHandler())
+}
 
 // Error handler
 app.use(errorHandler)

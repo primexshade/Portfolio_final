@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import VisionProLayout from '../layouts/VisionProLayout'
 
 /** Brief intro and animated tech logos */
 export default function HomePage() {
@@ -12,7 +13,18 @@ export default function HomePage() {
   ]
 
   return (
-    <section className="section space-y-12 min-h-screen">
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.01,
+        scanlineIntensity: 0.08,
+        speed: 0.15,
+        scanlineFrequency: 2,
+        warpAmount: 0.05,
+        resolutionScale: 0.5
+      }}
+    >
+    <section className="container-px pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24 space-y-12 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,5 +127,6 @@ export default function HomePage() {
         ))}
       </motion.div>
     </section>
+    </VisionProLayout>
   )
 }

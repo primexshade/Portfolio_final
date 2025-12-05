@@ -2,115 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fixing unknown @apply rules */
 :root {
-  --bg-dark: #0D1117;
-  --text-dark: #C9D1D9;
-  --accent-dark: #2F81F7;
-
-  --bg-light: #F5F5F5;
-  --text-light: #1A1A1A;
-  --accent-light: #0078D4;
-}
-
-html {
-  scroll-behavior: smooth;
+  --bg-dark: #1a202c;
+  --text-dark: #f7fafc;
+  --bg-light: #ffffff;
+  --text-light: #2d3748;
 }
 
 body {
-  @apply bg-[var(--bg-dark)] text-[var(--text-dark)] dark:bg-[var(--bg-dark)] dark:text-[var(--text-dark)] font-inter;
-  /* Add safe area for iOS devices */
-  padding-bottom: env(safe-area-inset-bottom);
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
 }
 
-/* Reusable utility classes */
-.container-px { @apply px-4 sm:px-6 lg:px-8; }
-.section { @apply container-px py-12 sm:py-16 lg:py-24; }
-.card { @apply rounded-xl bg-white/5 dark:bg-white/5 backdrop-blur shadow-soft border border-white/10; }
-.btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition-colors duration-200; }
-.btn-primary { @apply btn bg-accent text-white hover:bg-accent/90; }
-.btn-ghost { @apply btn bg-transparent border border-white/10 hover:bg-white/10; }
-
-/* Light mode overrides */
-.light body { @apply bg-[var(--bg-light)] text-[var(--text-light)]; }
-
-/* Aurora Background Animations - Apple Sonoma style */
-@keyframes aurora-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-  33% { transform: translate(30px, -40px) scale(1.05); opacity: 0.25; }
-  66% { transform: translate(-20px, 30px) scale(0.95); opacity: 0.18; }
+.container-px {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@keyframes aurora-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
-  25% { transform: translate(-40px, 30px) scale(1.08); opacity: 0.2; }
-  50% { transform: translate(20px, -20px) scale(0.92); opacity: 0.12; }
-  75% { transform: translate(30px, 40px) scale(1.02); opacity: 0.18; }
+@media (min-width: 640px) {
+  .container-px {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
-@keyframes aurora-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.18; }
-  40% { transform: translate(50px, 20px) scale(1.1); opacity: 0.22; }
-  80% { transform: translate(-30px, -30px) scale(0.9); opacity: 0.15; }
+@media (min-width: 1024px) {
+  .container-px {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
-@keyframes aurora-4 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
-  30% { transform: translate(-25px, -35px) scale(1.06); opacity: 0.16; }
-  60% { transform: translate(35px, 25px) scale(0.94); opacity: 0.1; }
+.section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-.animate-aurora-1 { animation: aurora-1 35s ease-in-out infinite; }
-.animate-aurora-2 { animation: aurora-2 40s ease-in-out infinite; }
-.animate-aurora-3 { animation: aurora-3 28s ease-in-out infinite; }
-.animate-aurora-4 { animation: aurora-4 32s ease-in-out infinite; }
-
-/* Apple-style shimmer for active nav links */
-@keyframes nav-shimmer {
-  0%, 100% { opacity: 0.5; transform: translateX(-100%); }
-  50% { opacity: 1; transform: translateX(100%); }
+@media (min-width: 640px) {
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
 }
 
-.nav-shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(47, 129, 247, 0.8), transparent);
-  animation: nav-shimmer 3s ease-in-out infinite;
+@media (min-width: 1024px) {
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
-/* Gradient Cloud Drift Animations - Vision Pro style */
-@keyframes cloud-drift-1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(80px, 30px); }
+.card {
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@keyframes cloud-drift-2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-70px, -20px); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-@keyframes cloud-drift-3 {
-  0%, 100% { transform: translate(-50%, -50%); }
-  50% { transform: translate(calc(-50% + 60px), calc(-50% + 40px)); }
+.btn-primary {
+  background-color: #3182ce;
+  color: #fff;
 }
 
-@keyframes cloud-drift-4 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(50px, -35px); }
+.btn-primary:hover {
+  background-color: #2b6cb0;
 }
 
-.animate-cloud-drift-1 { animation: cloud-drift-1 45s ease-in-out infinite; }
-.animate-cloud-drift-2 { animation: cloud-drift-2 50s ease-in-out infinite; }
-.animate-cloud-drift-3 { animation: cloud-drift-3 55s ease-in-out infinite; }
-.animate-cloud-drift-4 { animation: cloud-drift-4 48s ease-in-out infinite; }
+.btn-ghost {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-/* Mobile optimizations - reduce blur and effects for performance */
-@media (max-width: 768px) {
-  .backdrop-blur-3xl { @apply backdrop-blur-xl; }
-  .blur-3xl { @apply blur-xl; }
-  /* Reduce parallax intensity on mobile */
-  .parallax-mobile { transform: translateZ(0) !important; }
+.btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.light body {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.backdrop-blur-3xl {
+  backdrop-filter: blur(30px);
+}
+
+.blur-3xl {
+  filter: blur(30px);
 }

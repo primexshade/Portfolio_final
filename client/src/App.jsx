@@ -28,9 +28,9 @@ export default function App() {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-text">
+    <div className="relative w-full">
       <Navbar />
-      <main className="flex-1">
+      <main className="relative w-full">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />

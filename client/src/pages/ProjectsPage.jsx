@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { ExternalLink, Github, Search, Sparkles } from 'lucide-react'
-import { getProjects } from '../utils/api'
-import Loader from '../components/Loader'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Code2 } from 'lucide-react'
 import VisionProLayout from '../layouts/VisionProLayout'
+import { FEATURED_PROJECTS } from '../utils/constants'
 
-/** Projects page with filters, search, and gradient cards */
+/** Projects page - showcasing 2 featured projects from resume */
 export default function ProjectsPage() {
   const headerRef = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -14,70 +13,21 @@ export default function ProjectsPage() {
   })
   const headerY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const headerOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const [loading, setLoading] = useState(true)
-  const [projects, setProjects] = useState([])
-  const [filteredProjects, setFilteredProjects] = useState([])
-  const [error, setError] = useState('')
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeFilter, setActiveFilter] = useState('all')
-
-  useEffect(() => {
-    let mounted = true
-    getProjects()
-      .then((res) => {
-        if (mounted) {
-          const data = res.data || []
-          setProjects(data)
-          setFilteredProjects(data)
-          setLoading(false)
-        }
-      })
-      .catch((e) => {
-        if (mounted) {
-          setError(e?.response?.data?.message || 'Failed to load projects')
-          setLoading(false)
-        }
-      })
-    return () => { mounted = false }
-  }, [])
-
-  // Filter logic
-  useEffect(() => {
-    let filtered = projects
-
-    if (activeFilter === 'featured') {
-      filtered = filtered.filter((p) => p.featured)
-    }
-
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (p) =>
-          p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          p.techStack.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
-    }
-
-    setFilteredProjects(filtered)
-  }, [activeFilter, searchTerm, projects])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08 },
-    },
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  }
 
   return (
-    <VisionProLayout>
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.008,
+        scanlineIntensity: 0.08,
+        speed: 0.15,
+        scanlineFrequency: 2,
+        warpAmount: 0.05,
+        resolutionScale: 0.5
+      }}
+    >
       <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 min-h-screen">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <div className="max-w-7xl mx-auto space-y-12" style={{ position: 'relative' }}>
           {/* Header with parallax */}
           <motion.div
             ref={headerRef}
@@ -99,14 +49,6 @@ export default function ProjectsPage() {
                 Featured Work
               </motion.h1>
             </div>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg sm:text-xl text-white/60 max-w-3xl mx-auto"
-            >
-              A collection of projects I've built — from full-stack web apps to creative experiments
-            </motion.p>
           </motion.div>
 
           {/* Main Liquid Glass Panel */}
@@ -122,189 +64,70 @@ export default function ProjectsPage() {
             
             {/* Content */}
             <div className="relative p-8 md:p-12 lg:p-16 space-y-10">
-              {/* Search and filters */}
+              {/* Projects grid - 2 featured projects */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="grid sm:grid-cols-2 gap-8 max-w-6xl mx-auto"
               >
-                {/* Search */}
-                <div className="relative w-full sm:w-80">
-                  <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" />
-                  <input
-                    type="text"
-                    placeholder="Search projects..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-sm sm:text-base focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all shadow-lg text-white placeholder:text-white/40"
-                  />
-                </div>
-
-                {/* Filter tabs */}
-                <div className="flex gap-3">
-                  {['all', 'featured'].map((filter) => (
-                    <motion.button
-                      key={filter}
-                      onClick={() => setActiveFilter(filter)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-medium transition-all ${
-                        activeFilter === filter
-                          ? 'bg-white/10 backdrop-blur-xl text-white shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-white/20'
-                          : 'bg-white/5 backdrop-blur-xl text-white/70 hover:bg-white/10 border border-white/10'
-                      }`}
-                    >
-                      {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                    </motion.button>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Loading state */}
-              {loading && (
-                <div className="flex items-center justify-center py-20">
-                  <Loader />
-                </div>
-              )}
-
-              {/* Error state */}
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white/5 backdrop-blur-xl rounded-[24px] p-8 border border-red-500/20"
-                >
-                  <p className="text-red-400 text-base sm:text-lg">{error}</p>
-                  <p className="text-sm sm:text-base text-white/60 mt-3">
-                    Backend should be running on port 5002. Run <code className="text-[#6EE7FF]">npm run seed</code> in server folder.
-                  </p>
-                </motion.div>
-              )}
-
-              {/* Empty state */}
-              {!loading && !error && filteredProjects.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white/5 backdrop-blur-xl rounded-[24px] p-12 sm:p-16 text-center border border-white/10"
-                >
-                  <p className="text-white/70 text-base sm:text-lg">
-                    {searchTerm ? 'No projects match your search' : 'No projects found'}
-                  </p>
-                  {!searchTerm && (
-                    <code className="block mt-4 text-sm sm:text-base text-[#6EE7FF]">node server/seedProjects.js</code>
-                  )}
-                </motion.div>
-              )}
-
-              {/* Projects grid */}
-              {!loading && filteredProjects.length > 0 && (
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-                >
-                  <AnimatePresence mode="popLayout">
-                    {filteredProjects.map((p) => (
-                      <motion.article
-                        key={p._id || p.title}
-                        layout
-                        variants={cardVariants}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        whileHover={{ y: -6 }}
-                        transition={{ duration: 0.4 }}
-                        className="group relative bg-white/5 backdrop-blur-xl rounded-[24px] overflow-hidden flex flex-col border border-white/10 hover:border-white/20 shadow-lg hover:shadow-2xl"
-                      >
-                      {/* Image */}
-                      {p.imageUrl && (
-                        <div className="relative h-48 sm:h-56 w-full overflow-hidden">
-                          <motion.img
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.6 }}
-                            src={p.imageUrl}
-                            alt={p.title}
-                            className="h-full w-full object-cover"
-                          />
-                          {/* Overlay gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          
-                          {p.featured && (
-                            <motion.div
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              className="absolute top-3 sm:top-4 right-3 sm:right-4 px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-white/10 backdrop-blur-xl text-white rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg border border-white/20"
-                            >
-                              <Sparkles size={12} />
-                              Featured
-                            </motion.div>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="p-5 sm:p-7 flex flex-col gap-3 sm:gap-4 flex-1">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-[#6EE7FF] transition-colors">
-                          {p.title}
-                        </h3>
-                        <p className="text-sm sm:text-base text-white/60 line-clamp-3 flex-1">
-                          {p.description}
-                        </p>
-
-                        {/* Tech Stack */}
-                        <div className="flex flex-wrap gap-2 sm:gap-2.5">
-                          {(p.techStack || []).slice(0, 4).map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-xl bg-white/10 text-white/80 border border-white/20 hover:bg-white/20 transition-colors"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                          {p.techStack?.length > 4 && (
-                            <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-xl bg-white/5 text-white/50">
-                              +{p.techStack.length - 4}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Links */}
-                        <div className="mt-auto flex gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-white/10">
-                          {p.githubUrl && (
-                            <motion.a
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="flex-1 py-2.5 sm:py-3 bg-white/5 backdrop-blur-xl rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 hover:bg-white/10 border border-white/10 transition-all"
-                              href={p.githubUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <Github size={16} />
-                              Code
-                            </motion.a>
-                          )}
-                          {p.demoUrl && (
-                            <motion.a
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="flex-1 py-2.5 sm:py-3 bg-white/10 backdrop-blur-xl rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 text-white shadow-[0_0_30px_rgba(110,231,255,0.2)] hover:shadow-[0_0_40px_rgba(110,231,255,0.4)] border border-white/20 transition-all"
-                              href={p.demoUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <ExternalLink size={16} />
-                              Demo
-                            </motion.a>
-                          )}
+                {FEATURED_PROJECTS.map((project, idx) => (
+                  <motion.article
+                    key={project.title}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 * idx }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="group relative"
+                  >
+                    {/* Gradient glow on hover */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-accent/50 to-accent/20 rounded-[28px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+                    
+                    <div className="relative bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 overflow-hidden flex flex-col h-full hover:border-white/20 transition-all shadow-2xl">
+                      {/* Tech Header with gradient background */}
+                      <div className="relative h-48 w-full bg-gradient-to-br from-accent/20 via-accent/10 to-accent/5 flex items-center justify-center overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(110,231,255,0.15),transparent_50%)]" />
+                        <Code2 size={56} className="text-accent relative z-10 drop-shadow-[0_0_20px_rgba(47,129,247,0.5)]" />
+                        <div className="absolute top-4 right-4 px-4 py-1.5 text-sm font-medium bg-white/10 backdrop-blur-xl text-white rounded-full border border-white/20 shadow-lg">
+                          {project.year}
                         </div>
                       </div>
-                    </motion.article>
-                  ))}
-                </AnimatePresence>
+
+                      <div className="p-7 sm:p-8 flex flex-col gap-5 flex-1">
+                        <div>
+                          <h3 className="text-2xl font-semibold text-white group-hover:text-accent transition-colors mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-base text-white/50 font-medium">{project.tech}</p>
+                        </div>
+
+                        {/* Description as bullet list */}
+                        <ul className="space-y-3 text-sm sm:text-base text-white/70 flex-1">
+                          {project.description.map((desc, i) => (
+                            <li key={i} className="flex gap-3">
+                              <span className="text-accent mt-1.5 text-lg">•</span>
+                              <span className="leading-relaxed">{desc}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Tech Tags */}
+                        <div className="flex flex-wrap gap-2.5 pt-4 border-t border-white/10">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-3.5 py-2 text-xs sm:text-sm rounded-xl bg-white/10 text-white/80 border border-white/15 hover:bg-white/15 hover:border-accent/30 transition-all cursor-default shadow-lg"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
               </motion.div>
-            )}
             </div>
           </motion.div>
         </div>

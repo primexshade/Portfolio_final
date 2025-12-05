@@ -1,15 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, Code2, Zap } from 'lucide-react'
-import AuroraBackground from '../components/AuroraBackground'
-import GradientClouds from '../components/GradientClouds'
-import FloatingIcons from '../components/FloatingIcons'
-import SpotlightCursor from '../components/SpotlightCursor'
+import { ArrowRight, Sparkles, Code2, Zap, Download } from 'lucide-react'
 import AboutSection from '../sections/AboutSection'
 import ProjectsSection from '../sections/ProjectsSection'
 import CombinedStatsSection from '../sections/CombinedStatsSection'
 import ContactSection from '../sections/ContactSection'
+import VisionProLayout from '../layouts/VisionProLayout'
 
 /** Vision Pro-level scroll-driven landing page with unified sections */
 export default function LandingPage() {
@@ -50,9 +47,22 @@ export default function LandingPage() {
       mouseY.set(-deltaY * 4) // Inverted for natural tilt
     }
     
+    const handleMouseLeave = () => {
+      // Reset to center when mouse leaves
+      mouseX.set(0)
+      mouseY.set(0)
+    }
+    
+    const section = sectionRef.current
+    if (section) {
+      section.addEventListener('mouseleave', handleMouseLeave)
+    }
     window.addEventListener('mousemove', handleMouseMove)
     
     return () => {
+      if (section) {
+        section.removeEventListener('mouseleave', handleMouseLeave)
+      }
       window.removeEventListener('mousemove', handleMouseMove)
     }
   }, [mouseX, mouseY])
@@ -82,26 +92,23 @@ export default function LandingPage() {
   }
 
   return (
-    <>
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.01,
+        scanlineIntensity: 0.08,
+        speed: 0.15,
+        scanlineFrequency: 2,
+        warpAmount: 0.05,
+        resolutionScale: 0.5
+      }}
+    >
       {/* Hero Section */}
       <section
         ref={sectionRef}
-        className="relative h-[calc(100vh-48px)] grid place-items-center overflow-hidden"
+        className="relative h-[calc(100vh-64px)] grid place-items-center overflow-hidden"
       >
-        {/* Layer 1: Apple Sonoma-style aurora background (z-[-30]) */}
-        <AuroraBackground />
-
-        {/* Layer 2: Gradient clouds (z-0) */}
-        <GradientClouds />
-        
-        {/* AirPods Pro spotlight effect (z-15) */}
-        <SpotlightCursor />
-
-        {/* Layer 3: Floating tech/CS icons with 3D tilt (z-10) */}
-        <FloatingIcons />
-
-        {/* Grid pattern overlay (z-0, dimmed) */}
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:24px_24px]" />
+        {/* Background layers provided globally by VisionProLayout */}
 
         {/* Hero content with 3D tilt and scroll animations (z-20) */}
         <motion.div
@@ -117,62 +124,76 @@ export default function LandingPage() {
           }}
           whileHover={{ scale: 1.01 }}
           transition={{ scale: { duration: 0.3 } }}
-          className="relative z-20 section max-w-6xl mx-auto text-center space-y-10"
+          className="relative z-20 section max-w-6xl mx-auto px-4 sm:px-6 md:px-8 text-center space-y-8"
         >
-          {/* Badge */}
-          <motion.div variants={itemVariants} className="inline-flex">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-white/90 text-xs sm:text-sm font-medium shadow-xl">
-              <Sparkles size={16} className="animate-pulse text-accent" />
-              Available for new opportunities
-            </div>
-          </motion.div>
+          {/* Badge removed per request */}
 
           {/* Hero text - Vision Pro scale with text glow */}
-          <motion.div variants={itemVariants} className="relative">
+          <motion.div variants={itemVariants} className="relative space-y-6">
             {/* Soft glow behind text */}
             <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 blur-3xl opacity-40" />
             
-            <h1 className="relative text-7xl sm:text-8xl md:text-[110px] font-semibold tracking-tight leading-[1.1]">
-              <span className="bg-gradient-to-r from-white via-white/80 to-white/50 bg-clip-text text-transparent">
-                Building Digital
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-white via-white/80 to-white/50 bg-clip-text text-transparent">
-                Experiences with Craft
+            {/* Main Name */}
+            <h1 className="relative text-[48px] sm:text-[80px] md:text-[110px] font-semibold tracking-tight leading-[0.95]">
+              <span className="bg-gradient-to-b from-white via-white/70 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_80px_rgba(110,231,255,0.35)]">
+                Aryan Tiwari
               </span>
             </h1>
+
+            {/* Tagline */}
+            <p className="relative text-xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight">
+              <span className="bg-gradient-to-b from-white via-white/80 to-white/50 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(110,231,255,0.25)]">
+                Crafting Systems. Shaping Experiences.
+              </span>
+              <br />
+              <span className="bg-gradient-to-b from-white via-white/80 to-white/50 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(110,231,255,0.25)]">
+                Engineered with Intent.
+              </span>
+            </p>
           </motion.div>
 
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="max-w-2xl mx-auto text-lg sm:text-xl text-white/60 leading-relaxed font-light"
+            className="max-w-3xl mx-auto text-base sm:text-lg text-white/70 leading-relaxed font-light"
           >
-            Full-stack developer specializing in high-quality, scalable web applications.
-            Transforming ideas into elegant solutions.
+            I'm a software developer who loves turning ideas into fluid, reliable, and beautifully engineered digital experiences. With a strong foundation in MERN, backend systems, AI fundamentals, and cloud-native architecture, I build products that scale effortlessly and feel great to use. I thrive at the intersection of design and engineering — crafting systems that are both thoughtful and technically robust.
           </motion.p>
 
           {/* CTA Buttons with upgraded glassmorphism */}
           <motion.div
             variants={itemVariants}
             style={{ opacity: buttonOpacity }}
-            className="flex flex-wrap items-center justify-center gap-4 pt-6"
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 pt-6"
           >
-            <Link
-              to="/contact"
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="group relative inline-flex items-center gap-2 px-8 py-4 bg-white/90 text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-[1.03] shadow-[0_0_35px_10px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_15px_rgba(255,255,255,0.25)]"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Let's Work Together
+                Contact Me
                 <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
               </span>
-            </Link>
+            </a>
+
+            <a
+              href="/resume/Aryan_Tiwari.pdf"
+              download
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
+            >
+              Download Resume
+              <Download size={20} className="transition-transform group-hover:translate-y-1" />
+            </a>
 
             <Link
               to="/projects"
               className="group inline-flex items-center gap-2 px-8 py-4 bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
             >
-              Explore My Work
+              View Projects
               <Code2 size={20} className="transition-transform group-hover:rotate-12" />
             </Link>
           </motion.div>
@@ -182,7 +203,7 @@ export default function LandingPage() {
             variants={itemVariants}
             className="flex flex-wrap items-center justify-center gap-6 pt-12 text-sm text-white/50"
           >
-            {['React', 'Node.js', 'MongoDB', 'TypeScript'].map((tech, i) => (
+            {['MERN Stack', 'AWS', 'REST APIs', 'System Design'].map((tech, i) => (
               <motion.div
                 key={tech}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -209,7 +230,9 @@ export default function LandingPage() {
       <CombinedStatsSection />
 
       {/* Contact Section */}
-      <ContactSection />
-    </>
+      <div id="contact">
+        <ContactSection />
+      </div>
+    </VisionProLayout>
   )
 }

@@ -8,6 +8,7 @@ export async function connectDB(uri) {
     console.log('✅ MongoDB connected')
   } catch (err) {
     console.error('❌ MongoDB connection error:', err.message)
-    process.exit(1)
+    console.log('⚠️  Server will continue without MongoDB (GitHub/LeetCode APIs will still work)')
+    // Don't exit - allow server to continue for non-DB endpoints
   }
 }

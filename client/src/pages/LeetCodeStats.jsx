@@ -14,7 +14,7 @@ export default function LeetCodeStats() {
   const headerY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const headerOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   
-  const [username, setUsername] = useState('leetcode')
+  const [username, setUsername] = useState('primexshade')
   const [data, setData] = useState(null)
   const [error, setError] = useState('')
 
@@ -33,7 +33,17 @@ export default function LeetCodeStats() {
   ] : []
 
   return (
-    <VisionProLayout>
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.008,
+        scanlineIntensity: 0.07,
+        speed: 0.14,
+        scanlineFrequency: 2,
+        warpAmount: 0.04,
+        resolutionScale: 0.5
+      }}
+    >
       <section className="section space-y-12 min-h-screen relative z-20">
         {/* Header with parallax */}
         <motion.div

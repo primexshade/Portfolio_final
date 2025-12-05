@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { Send, CheckCircle, Mail, User, MessageSquare, Github, Linkedin, Twitter } from 'lucide-react'
+import { Send, CheckCircle, Mail, User, MessageSquare, Github, Linkedin, Instagram, Twitter } from 'lucide-react'
 import { postContact } from '../utils/api'
 import VisionProLayout from '../layouts/VisionProLayout'
 
@@ -40,13 +40,24 @@ export default function ContactPage() {
   }
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/', label: 'Twitter' },
+    { icon: Github, href: 'https://github.com/primexshade', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/aryan-tiwari-shade', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com/ig__.aryan', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:aaryan.tiwari54@gmail.com', label: 'Email' },
   ]
 
   return (
-    <VisionProLayout>
+    <VisionProLayout
+      darkVeilConfig={{
+        hueShift: 0,
+        noiseIntensity: 0.01,
+        scanlineIntensity: 0.08,
+        speed: 0.15,
+        scanlineFrequency: 2,
+        warpAmount: 0.05,
+        resolutionScale: 0.5
+      }}
+    >
       <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 min-h-screen relative z-20">
         <div className="max-w-7xl mx-auto space-y-12">
           {/* Header with parallax */}
@@ -108,13 +119,13 @@ export default function ContactPage() {
 
                     <div className="space-y-5">
                       <a
-                        href="mailto:hello@example.com"
+                        href="mailto:aaryan.tiwari54@gmail.com"
                         className="flex items-center gap-4 text-white/80 hover:text-[#6EE7FF] transition-colors group"
                       >
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                           <Mail size={20} className="sm:w-6 sm:h-6 text-[#6EE7FF]" />
                         </div>
-                        <span className="text-sm sm:text-base">hello@example.com</span>
+                        <span className="text-sm sm:text-base">aaryan.tiwari54@gmail.com</span>
                       </a>
                     </div>
 

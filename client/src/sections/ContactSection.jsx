@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Send, CheckCircle, Mail, User, MessageSquare, Github, Linkedin, Twitter } from 'lucide-react'
+import { Send, CheckCircle, Mail, User, MessageSquare, Github, Linkedin, Instagram, Twitter } from 'lucide-react'
 import { postContact } from '../utils/api'
 
 /** Contact section for scroll-driven landing page */
@@ -40,18 +40,19 @@ export default function ContactSection() {
   }
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/', label: 'Twitter' },
+    { icon: Github, href: 'https://github.com/primexshade', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/aryan-tiwari-shade', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com/ig__.aryan', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:aaryan.tiwari54@gmail.com', label: 'Email' },
   ]
 
   return (
     <motion.section
       ref={sectionRef}
       style={{ opacity, y, scale }}
-      className="relative flex items-center justify-center py-20"
+      className="relative flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
     >
-      <div className="section max-w-5xl mx-auto">
+      <div className="w-full max-w-5xl mx-auto">
         {/* Single Liquid Glass Panel */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -59,7 +60,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           whileHover={{ y: -4 }}
-          className="relative bg-white/10 backdrop-blur-3xl rounded-[32px] border border-white/15 shadow-[0_40px_120px_rgba(0,0,0,0.35)] p-8 md:p-12 lg:p-16 space-y-12"
+          className="relative bg-white/10 backdrop-blur-3xl rounded-[32px] border border-white/15 shadow-[0_40px_120px_rgba(0,0,0,0.35)] p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 space-y-8 sm:space-y-12 overflow-hidden"
         >
           {/* Soft reflection overlay */}
           <div className="absolute inset-0 rounded-[32px] bg-gradient-to-b from-white/5 via-transparent to-transparent opacity-40 pointer-events-none" />
@@ -86,37 +87,37 @@ export default function ContactSection() {
             </motion.div>
 
         {/* Contact Form & Info */}
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6"
+            className="lg:col-span-2 space-y-4 sm:space-y-6 min-w-0"
           >
             {/* Info card */}
-            <div className="p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl space-y-6 hover:bg-white/7 transition-all">
+            <div className="p-4 sm:p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl space-y-4 sm:space-y-6 hover:bg-white/7 transition-all">
               <div className="space-y-2">
-                <h3 className="font-semibold text-lg text-white">Get in Touch</h3>
-                <p className="text-sm text-white/70">
+                <h3 className="font-semibold text-base sm:text-lg text-white">Get in Touch</h3>
+                <p className="text-xs sm:text-sm text-white/70">
                   I'm always open to discussing new projects and opportunities.
                 </p>
               </div>
 
               <a
-                href="mailto:taryan54@gmail.com"
-                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group"
+                href="mailto:aaryan.tiwari54@gmail.com"
+                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group min-w-0"
               >
-                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:bg-accent/20 transition-colors flex-shrink-0">
                   <Mail size={18} className="text-accent" />
                 </div>
-                <span className="text-sm">taryan54@gmail.com</span>
+                <span className="text-xs sm:text-sm truncate">aaryan.tiwari54@gmail.com</span>
               </a>
 
-              <div className="pt-6 border-t border-white/10">
-                <p className="text-sm text-white/70 mb-4">Connect with me</p>
-                <div className="flex gap-3">
+              <div className="pt-4 sm:pt-6 border-t border-white/10">
+                <p className="text-xs sm:text-sm text-white/70 mb-3 sm:mb-4">Connect with me</p>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {socialLinks.map((social) => (
                     <motion.a
                       key={social.label}
@@ -135,8 +136,8 @@ export default function ContactSection() {
             </div>
 
             {/* Quick response badge */}
-            <div className="p-4 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 bg-accent/5 border-accent/20">
-              <p className="text-sm text-white/70">
+            <div className="p-3 sm:p-4 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 bg-accent/5 border-accent/20">
+              <p className="text-xs sm:text-sm text-white/70">
                 ⚡ <span className="text-accent font-medium">Quick Response</span> — I typically reply within 24 hours
               </p>
             </div>
@@ -149,7 +150,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="lg:col-span-3 p-8 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl space-y-6 hover:bg-white/7 transition-all"
+            className="lg:col-span-3 p-4 sm:p-6 md:p-8 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl space-y-4 sm:space-y-6 hover:bg-white/7 transition-all min-w-0"
           >
             {/* Name Field */}
             <div className="relative">
@@ -166,7 +167,7 @@ export default function ContactSection() {
                 onFocus={() => setFocused({ ...focused, name: true })}
                 onBlur={() => setFocused({ ...focused, name: false })}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all text-white placeholder:text-white/40"
+                className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all text-white text-sm sm:text-base placeholder:text-white/40"
                 placeholder="Your name"
               />
             </div>
@@ -186,7 +187,7 @@ export default function ContactSection() {
                 onFocus={() => setFocused({ ...focused, email: true })}
                 onBlur={() => setFocused({ ...focused, email: false })}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all text-white placeholder:text-white/40"
+                className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all text-white text-sm sm:text-base placeholder:text-white/40"
                 placeholder="your.email@example.com"
               />
             </div>
@@ -206,7 +207,7 @@ export default function ContactSection() {
                 onFocus={() => setFocused({ ...focused, message: true })}
                 onBlur={() => setFocused({ ...focused, message: false })}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all resize-none text-white placeholder:text-white/40"
+                className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg outline-none focus:border-accent/50 focus:bg-white/10 transition-all resize-none text-white text-sm sm:text-base placeholder:text-white/40"
                 placeholder="Tell me about your project..."
               />
             </div>
@@ -217,7 +218,7 @@ export default function ContactSection() {
               disabled={loading}
               whileHover={{ scale: loading ? 1 : 1.02 }}
               whileTap={{ scale: loading ? 1 : 0.98 }}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-white/90 text-black font-semibold rounded-full hover:shadow-[0_0_35px_10px_rgba(255,255,255,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-white/90 text-black text-sm sm:text-base font-semibold rounded-full hover:shadow-[0_0_35px_10px_rgba(255,255,255,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>

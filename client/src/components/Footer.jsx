@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUp, Heart } from 'lucide-react'
+import { Github, Linkedin, Mail, Instagram, ArrowUp, Heart } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -11,28 +11,29 @@ export default function Footer() {
   }
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:taryan54@gmail.com', label: 'Email' },
+    { icon: Github, href: 'https://github.com/primexshade', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/aryan-tiwari-shade', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com/ig__.aryan', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:aaryan.tiwari54@gmail.com', label: 'Email' },
   ]
 
   return (
-    <footer className="relative border-t border-white/10 bg-background/60 backdrop-blur-sm">
+    <footer className="relative z-30 border-t border-white/10 bg-background/60 backdrop-blur-sm">
       {/* Gradient divider */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
 
-      <div className="section py-8 space-y-6">
+      <div className="max-w-7xl mx-auto px-7 py-2 space-y-1.5">
         {/* Main footer content */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
           {/* Copyright */}
-          <div className="flex items-center gap-2 text-sm text-text/60">
+          <div className="flex items-center gap-1.5 text-text/60">
             <span>© {year} Built with</span>
-            <Heart size={14} className="text-red-400 animate-pulse" fill="currentColor" />
+            <Heart size={10} className="text-red-400 animate-pulse" fill="currentColor" />
             <span>by Aryan Tiwari</span>
           </div>
 
           {/* Social links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {socialLinks.map((social, i) => (
               <motion.a
                 key={social.label}
@@ -43,32 +44,32 @@ export default function Footer() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.1, y: -2 }}
-                className="p-2 rounded-lg bg-white/5 hover:bg-accent/10 hover:text-accent border border-white/10 hover:border-accent/30 transition-all"
+                className="p-1.5 rounded-lg bg-white/5 hover:bg-accent/10 hover:text-accent border border-white/10 hover:border-accent/30 transition-all"
                 aria-label={social.label}
               >
-                <social.icon size={18} />
+                <social.icon size={14} />
               </motion.a>
             ))}
           </div>
 
           {/* Quick links */}
-          <div className="flex items-center gap-4 text-sm text-text/60">
+          <div className="flex items-center gap-2 text-text/60">
             <Link to="/projects" className="hover:text-accent transition-colors">
               Work
             </Link>
-            <span className="w-px h-4 bg-white/10" />
+            <span className="w-px h-3 bg-white/10" />
             <Link to="/about" className="hover:text-accent transition-colors">
               About
             </Link>
-            <span className="w-px h-4 bg-white/10" />
-            <a href="/resume.pdf" className="hover:text-accent transition-colors">
+            <span className="w-px h-3 bg-white/10" />
+            <a href="/Aryan_Tiwari.pdf" className="hover:text-accent transition-colors" download>
               Resume
             </a>
           </div>
         </div>
 
         {/* Tech stack badge */}
-        <div className="text-center text-xs text-text/40 pt-4 border-t border-white/5">
+        <div className="text-center text-[11px] text-text/40 pt-1 border-t border-white/5">
           Built with React, Node.js, Express, MongoDB · Deployed on Vercel & Render
         </div>
       </div>
@@ -80,10 +81,10 @@ export default function Footer() {
         whileInView={{ opacity: 1, scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-8 right-8 p-3 rounded-full bg-accent text-white shadow-lg hover:shadow-accent/50 transition-shadow z-40"
+        className="fixed bottom-6 right-6 p-2 rounded-full bg-accent text-white shadow-lg hover:shadow-accent/50 transition-shadow z-40"
         aria-label="Scroll to top"
       >
-        <ArrowUp size={20} />
+        <ArrowUp size={16} />
       </motion.button>
     </footer>
   )

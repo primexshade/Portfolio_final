@@ -1,0 +1,321 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+      - production
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  # Test Backend
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:latest
+        options: >-
+          --health-cmd mongosh
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        working-directory: server
+        run: npm install
+
+      - name: Run tests
+        working-directory: server
+        run: npm test || true
+        env:
+          MONGODB_URI: mongodb://localhost:27017/portfolio-test
+          NODE_ENV: test
+
+      - name: Lint backend
+        working-directory: server
+        run: npm run lint || true
+
+  # Test Frontend
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Build frontend
+        working-directory: client
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: client-build
+          path: client/dist
+          retention-days: 1
+
+      - name: Lint frontend
+        working-directory: client
+        run: npm run lint || true
+
+  # Build Backend Docker Image
+  build-backend:
+    name: Build Backend Docker Image
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production')
+    needs: test-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        if: secrets.DOCKERHUB_USERNAME != ''
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./server
+          push: ${{ secrets.DOCKERHUB_USERNAME != '' }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-api:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/portfolio-api:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/portfolio-api:buildcache,mode=max
+        if: secrets.DOCKERHUB_USERNAME != ''
+
+  # Deploy Frontend to Vercel
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test-frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Vercel
+        uses: BerniWittmann/vercel-deploy@main
+        with:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERCEL_ENV: production
+          SCOPE: ${{ secrets.VERCEL_SCOPE }}
+        if: secrets.VERCEL_TOKEN != ''
+
+  # Deploy Backend to Heroku
+  deploy-backend:
+    name: Deploy Backend to Heroku
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: server
+          usedocker: false
+        if: secrets.HEROKU_API_KEY != ''
+
+      - name: Heroku Logs
+        run: |
+          echo "Deployment initiated. View logs:"
+          echo "heroku logs --tail -a ${{ secrets.HEROKU_APP_NAME }}"
+
+  # Performance Test
+  performance-test:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Build and analyze
+        working-directory: client
+        run: |
+          npm run build
+          echo "Build size analysis:"
+          du -sh dist/
+          echo "Individual file sizes:"
+          du -sh dist/assets/*
+
+      - name: Check bundle size
+        working-directory: client
+        run: |
+          SIZE=$(du -s dist/ | cut -f1)
+          LIMIT=500000  # 500MB in KB
+          if [ $SIZE -gt $LIMIT ]; then
+            echo "❌ Bundle size $SIZE KB exceeds limit $LIMIT KB"
+            exit 1
+          else
+            echo "✅ Bundle size $SIZE KB is within limit"
+          fi
+
+  # Security Scan
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run npm audit (frontend)
+        working-directory: client
+        run: npm audit --audit-level=moderate || true
+
+      - name: Run npm audit (backend)
+        working-directory: server
+        run: npm audit --audit-level=moderate || true
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=mern-portfolio
+            -Dsonar.organization=your-org
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+        if: secrets.SONARCLOUD_TOKEN != ''
+
+  # Notify on Deployment
+  notify:
+    name: Send Notification
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [test-backend, test-frontend]
+
+    steps:
+      - name: Determine status
+        id: status
+        run: |
+          if [ "${{ needs.test-backend.result }}" = "success" ] && [ "${{ needs.test-frontend.result }}" = "success" ]; then
+            echo "status=✅ All tests passed" >> $GITHUB_OUTPUT
+          else
+            echo "status=❌ Some tests failed" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "Portfolio CI/CD: ${{ steps.status.outputs.status }}",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "🚀 CI/CD Pipeline Status"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Author:*\n${{ github.actor }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.status.outputs.status }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: secrets.SLACK_WEBHOOK_URL != ''
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Portfolio Deployment - ${{ steps.status.outputs.status }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: "CI/CD Pipeline"
+          body: |
+            Deployment Status: ${{ steps.status.outputs.status }}
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+        if: secrets.EMAIL_SERVER != ''

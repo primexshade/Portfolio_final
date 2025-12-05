@@ -2,10 +2,10 @@ import axios from 'axios'
 
 /**
  * Axios instance configured with API base URL.
- * VITE_API_BASE_URL should be set in client env (Vercel/Local).
+ * Uses Vite proxy in development, full URL in production.
  */
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000',
+  baseURL: import.meta.env.PROD ? (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000') : '',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
 })
