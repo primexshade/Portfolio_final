@@ -108,10 +108,10 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-0 flex items-center justify-center z-50 md:hidden p-6"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 md:hidden w-[calc(100vw-3rem)] max-w-[280px]"
             >
-              <div className="w-full max-w-[280px] max-h-[85vh] bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-y-auto">
-                <div className="p-6 flex flex-col gap-1">
+              <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl">
+                <div className="p-5 flex flex-col gap-1">
                   {NAV_LINKS.map((l, i) => (
                     <motion.div
                       key={l.path}
@@ -122,7 +122,7 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }) {
                       <NavLink
                         to={l.path}
                         className={({ isActive }) =>
-                          `block px-4 py-2.5 text-sm font-semibold rounded-xl transition-all whitespace-nowrap text-center ${
+                          `block px-4 py-2 text-sm font-semibold rounded-xl transition-all whitespace-nowrap text-center ${
                             isActive 
                               ? 'text-white bg-gradient-to-r from-accent/80 to-accent/60 shadow-lg shadow-accent/20' 
                               : 'text-text/90 hover:text-accent hover:bg-white/10'
