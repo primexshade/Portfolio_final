@@ -22,9 +22,9 @@ export default function Footer() {
       {/* Gradient divider */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 space-y-1.5 sm:space-y-2">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 space-y-1 sm:space-y-1.5">
         {/* Main footer content */}
-        <div className="flex flex-col gap-3 sm:gap-4 text-xs sm:text-sm">
+        <div className="flex flex-col gap-2 sm:gap-3 text-xs sm:text-sm">
           {/* Copyright */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1 text-text/60 order-3 sm:order-1">
             <span className="whitespace-nowrap">© {year} Built with</span>
@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
 
         {/* Tech stack badge */}
-        <div className="text-center text-[10px] sm:text-[11px] text-text/40 pt-2 sm:pt-3 border-t border-white/5">
+        <div className="text-center text-[10px] sm:text-[11px] text-text/40 pt-1 sm:pt-2 border-t border-white/5">
           Built with Node.js, Express, MongoDB, React, Tailwind · Tools: Git, Firebase
         </div>
       </div>

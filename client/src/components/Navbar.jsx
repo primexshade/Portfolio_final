@@ -26,22 +26,24 @@ export default function Navbar() {
         scrolled ? 'bg-white/8 border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' : ''
       }`}
     >
-      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group flex-shrink-0" aria-label="Aryan Tiwari – Home">
-          <motion.div
-            whileHover={{ rotate: 360, scale: 1.05 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent to-accent/60 flex items-center justify-center shadow-[0_0_20px_rgba(47,129,247,0.3)] hover:shadow-[0_0_30px_rgba(47,129,247,0.5)] transition-shadow"
-          >
-            <span className="text-white font-extrabold text-[9px] sm:text-[10px] leading-none">AT</span>
-          </motion.div>
-          <span className="font-semibold text-sm sm:text-base tracking-tight group-hover:text-accent transition-colors truncate">
-            Portfolio
-          </span>
-        </Link>
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-center gap-4 sm:gap-6 md:gap-8 relative">
+        {/* Logo - positioned absolutely on left */}
+        <div className="absolute left-0">
+          <Link to="/" className="flex items-center gap-2 group flex-shrink-0" aria-label="Aryan Tiwari – Home">
+            <motion.div
+              whileHover={{ rotate: 360, scale: 1.05 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent to-accent/60 flex items-center justify-center shadow-[0_0_20px_rgba(47,129,247,0.3)] hover:shadow-[0_0_30px_rgba(47,129,247,0.5)] transition-shadow"
+            >
+              <span className="text-white font-extrabold text-[9px] sm:text-[10px] leading-none">AT</span>
+            </motion.div>
+            <span className="font-semibold text-sm sm:text-base tracking-tight group-hover:text-accent transition-colors truncate">
+              Portfolio
+            </span>
+          </Link>
+        </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav - centered */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {NAV_LINKS.map((l) => (
             <NavLink
@@ -72,10 +74,10 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button - positioned absolutely on right */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 sm:p-2.5 rounded-lg hover:bg-white/10 transition-colors active:scale-95"
+          className="absolute right-0 md:hidden p-2 sm:p-2.5 rounded-lg hover:bg-white/10 transition-colors active:scale-95"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={22} /> : <Menu size={22} />}
