@@ -22,10 +22,11 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 h-14 sm:h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 border-b transition-[background,backdrop-filter,border-color,box-shadow] duration-300 backdrop-blur-xl bg-white/6 dark:bg-white/6 border-white/10 ${
+      className={`fixed top-0 w-full z-50 h-14 sm:h-16 flex items-center justify-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-16 border-b transition-[background,backdrop-filter,border-color,box-shadow] duration-300 backdrop-blur-xl bg-white/6 dark:bg-white/6 border-white/10 ${
         scrolled ? 'bg-white/8 border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' : ''
       }`}
     >
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group flex-shrink-0" aria-label="Aryan Tiwari – Home">
           <motion.div
@@ -41,13 +42,13 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {NAV_LINKS.map((l) => (
             <NavLink
               key={l.path}
               to={l.path}
               className={({ isActive }) =>
-                `group relative text-sm font-medium transition-colors hover:text-accent ${
+                `group relative text-xs sm:text-sm md:text-sm font-medium transition-colors hover:text-accent ${
                   isActive ? 'text-accent nav-shimmer' : 'text-text/70'
                 }`
               }
@@ -79,6 +80,7 @@ export default function Navbar() {
         >
           {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
+      </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
