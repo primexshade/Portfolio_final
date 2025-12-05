@@ -26,7 +26,7 @@ export default function Footer() {
         {/* Main footer content */}
         <div className="flex flex-col gap-2 sm:gap-3 text-xs sm:text-sm">
           {/* Copyright */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1 text-text/60 order-3 sm:order-1">
+          <div className="flex flex-wrap items-center justify-center gap-1 text-text/60 order-3 sm:order-1">
             <span className="whitespace-nowrap">© {year} Built with</span>
             <Heart size={10} className="text-red-400 animate-pulse flex-shrink-0" fill="currentColor" />
             <span className="whitespace-nowrap">by Aryan Tiwari</span>
@@ -66,11 +66,6 @@ export default function Footer() {
               Resume
             </a>
           </div>
-        </div>
-
-        {/* Tech stack badge */}
-        <div className="text-center text-[10px] sm:text-[11px] text-text/40 pt-1 sm:pt-2 border-t border-white/5">
-          Built with Node.js, Express, MongoDB, React, Tailwind · Tools: Git, Firebase
         </div>
       </div>
 
