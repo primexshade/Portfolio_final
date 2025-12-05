@@ -45,8 +45,8 @@ export default function AboutPage() {
   ]
 
   const skills = [
-    'React', 'Node.js', 'Express', 'MongoDB', 'TypeScript',
-    'TailwindCSS', 'Framer Motion', 'Docker', 'AWS', 'Git'
+    'Node.js', 'Express.js', 'MongoDB', 'JavaScript', 'Bootstrap',
+    'Tailwind', 'Firebase', 'Git', 'Java', 'C++', 'SQL', 'HTML5', 'CSS3'
   ]
 
   return (

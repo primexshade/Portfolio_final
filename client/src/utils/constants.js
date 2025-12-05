@@ -19,10 +19,10 @@ export const PERSONAL_DATA = {
 
 // Skills from Resume
 export const SKILLS = {
-  languages: ['Java', 'JavaScript (ES6+)', 'C', 'C++', 'Python (basic)'],
-  frameworks: ['Node.js', 'Express.js', 'React.js', 'MongoDB', 'Mongoose'],
-  cloud: ['AWS (EC2, S3, Lambda, Route 53, RDS)', 'Git', 'GitHub', 'CI/CD basics'],
-  expertise: ['Backend Development', 'REST API Design', 'System Architecture', 'DSA', 'Problem Solving', 'Security Concepts', 'Social Engineering']
+  languages: ['JavaScript', 'Java', 'C++', 'SQL', 'HTML5', 'CSS3'],
+  frameworks: ['Node.js', 'Express.js', 'React.js', 'Bootstrap', 'Tailwind'],
+  databases: ['MongoDB', 'SQL'],
+  tools: ['Git', 'Firebase']
 }
 
 // Experience from Resume
@@ -50,17 +50,17 @@ export const FEATURED_PROJECTS = [
       'Uses Three.js for interactive visuals.',
       'Includes alumni interaction flows and secure event posting.'
     ],
-    tags: ['React', 'Node.js', 'MongoDB', 'Three.js', 'JWT', 'Express']
+    tags: ['Node.js', 'Express', 'MongoDB', 'JavaScript', 'JWT']
   },
   {
     title: 'Portfolio Website',
-    tech: 'Next.js / MERN',
+    tech: 'MERN Stack',
     year: '2025',
     description: [
-      'Microsoft/Apple-inspired design with animations and resume integration.',
-      'Dynamic rendering, dark/light mode, CMS-style architecture.'
+      'Modern design with animations and resume integration.',
+      'Dynamic rendering, dark/light mode, responsive architecture.'
     ],
-    tags: ['React', 'Next.js', 'MERN', 'Tailwind', 'Framer Motion']
+    tags: ['Node.js', 'Express', 'MongoDB', 'Tailwind', 'Bootstrap']
   }
 ]
 

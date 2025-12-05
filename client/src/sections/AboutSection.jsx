@@ -191,7 +191,7 @@ export default function AboutSection() {
 
                     {/* Frameworks */}
                     <div>
-                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Frameworks & Tools</h4>
+                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Frameworks & Libraries</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {SKILLS.frameworks.map((skill, i) => (
                           <motion.span
@@ -209,11 +209,11 @@ export default function AboutSection() {
                       </div>
                     </div>
 
-                    {/* Cloud & DevOps */}
+                    {/* Databases */}
                     <div>
-                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Cloud & DevOps</h4>
+                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Databases</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.cloud.map((skill, i) => (
+                        {SKILLS.databases.map((skill, i) => (
                           <motion.span
                             key={skill}
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -229,11 +229,11 @@ export default function AboutSection() {
                       </div>
                     </div>
 
-                    {/* Core Expertise */}
+                    {/* Tools */}
                     <div>
-                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Core Expertise</h4>
+                      <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Tools</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.expertise.map((skill, i) => (
+                        {SKILLS.tools.map((skill, i) => (
                           <motion.span
                             key={skill}
                             initial={{ opacity: 0, scale: 0.8 }}

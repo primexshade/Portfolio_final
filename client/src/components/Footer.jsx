@@ -70,7 +70,7 @@ export default function Footer() {
 
         {/* Tech stack badge */}
         <div className="text-center text-[11px] text-text/40 pt-1 border-t border-white/5">
-          Built with React, Node.js, Express, MongoDB · Deployed on Vercel & Render
+          Built with Node.js, Express, MongoDB, React, Tailwind · Tools: Git, Firebase
         </div>
       </div>
 
