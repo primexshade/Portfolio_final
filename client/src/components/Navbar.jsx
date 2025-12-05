@@ -84,38 +84,55 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Vision OS Theme */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="absolute top-14 sm:top-16 left-0 right-0 md:hidden border-t border-white/10 bg-white/6 backdrop-blur-xl max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto"
-          >
-            <div className="px-4 sm:px-6 py-3 sm:py-4 flex flex-col gap-1">
-              {NAV_LINKS.map((l, i) => (
-                <motion.div
-                  key={l.path}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.04, duration: 0.25 }}
-                >
-                  <NavLink
-                    to={l.path}
-                    className={({ isActive }) =>
-                      `block px-3 py-3 text-sm sm:text-base font-medium rounded-lg transition-all ${
-                        isActive ? 'text-accent bg-white/10' : 'text-text/80 hover:text-accent hover:bg-white/5'
-                      }`
-                    }
-                  >
-                    {l.label}
-                  </NavLink>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <>
+            {/* Opaque overlay backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+            />
+            
+            {/* Centered mobile menu */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 md:hidden"
+            >
+              <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="px-6 sm:px-8 py-6 sm:py-8 flex flex-col gap-2">
+                  {NAV_LINKS.map((l, i) => (
+                    <motion.div
+                      key={l.path}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.25 }}
+                    >
+                      <NavLink
+                        to={l.path}
+                        className={({ isActive }) =>
+                          `block px-6 py-3 text-sm sm:text-base font-semibold rounded-xl transition-all whitespace-nowrap text-center ${
+                            isActive 
+                              ? 'text-white bg-gradient-to-r from-accent/80 to-accent/60 shadow-lg shadow-accent/20' 
+                              : 'text-text/90 hover:text-accent hover:bg-white/10'
+                          }`
+                        }
+                      >
+                        {l.label}
+                      </NavLink>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
