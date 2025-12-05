@@ -332,8 +332,8 @@ export default function AboutSection() {
                     <span className="text-white font-medium">{EDUCATION.year}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>CGPA:</span>
-                    <span className="text-accent font-semibold">{EDUCATION.cgpa}</span>
+                    <span>Credit Scored:</span>
+                    <span className="text-accent font-semibold">{EDUCATION.creditScore}</span>
                   </div>
                 </div>
               </motion.div>

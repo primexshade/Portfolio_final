@@ -78,7 +78,7 @@ export const EDUCATION = {
   institution: 'SRM Institute of Science & Technology, NCR Campus',
   period: '2023 — Present',
   year: '3rd Year',
-  cgpa: '8.03'
+  creditScore: '89/89'
 }
 
 // UI color constants to keep design consistent
