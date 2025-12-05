@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import LandingPage from './pages/LandingPage.jsx'
@@ -26,11 +27,16 @@ function PageTransition({ children }) {
 // App shell with persistent navbar/footer and animated page routes
 export default function App() {
   const location = useLocation()
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col">
-      <Navbar />
-      <main className="relative w-full flex-1 pt-14 sm:pt-16">
+    <div className={`relative w-full min-h-screen flex flex-col ${mobileMenuOpen ? 'overflow-hidden' : ''}`}>
+      <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      {/* Blur overlay for mobile menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 md:hidden" style={{ backdropFilter: 'blur(4px)', zIndex: 39 }} />
+      )}
+      <main className={`relative w-full flex-1 pt-14 sm:pt-16 ${mobileMenuOpen ? 'blur-sm md:blur-none' : ''}`}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />

@@ -5,10 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { NAV_LINKS } from '../utils/constants'
 
 /** Global navigation bar with glass morphism */
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }) {
+  const [isOpen, setIsOpen] = useState(mobileMenuOpen)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+
+  useEffect(() => {
+    setMobileMenuOpen(isOpen)
+  }, [isOpen, setMobileMenuOpen])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
