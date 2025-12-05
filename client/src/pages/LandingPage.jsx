@@ -106,7 +106,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section
         ref={sectionRef}
-        className="relative h-[calc(100vh-64px)] grid place-items-center overflow-hidden"
+        className="relative min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)] w-full flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-12 sm:py-16"
       >
         {/* Background layers provided globally by VisionProLayout */}
 
@@ -134,14 +134,14 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 blur-3xl opacity-40" />
             
             {/* Main Name */}
-            <h1 className="relative text-[48px] sm:text-[80px] md:text-[110px] font-semibold tracking-tight leading-[0.95]">
+            <h1 className="relative text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[0.95]">
               <span className="bg-gradient-to-b from-white via-white/70 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_80px_rgba(110,231,255,0.35)]">
                 Aryan Tiwari
               </span>
             </h1>
 
             {/* Tagline */}
-            <p className="relative text-xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight">
+            <p className="relative text-base sm:text-lg md:text-2xl lg:text-3xl font-medium leading-tight tracking-tight">
               <span className="bg-gradient-to-b from-white via-white/80 to-white/50 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(110,231,255,0.25)]">
                 Crafting Systems. Shaping Experiences.
               </span>
@@ -155,7 +155,7 @@ export default function LandingPage() {
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="max-w-3xl mx-auto text-base sm:text-lg text-white/70 leading-relaxed font-light"
+            className="max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-white/70 leading-relaxed font-light px-2"
           >
             I'm a software developer who loves turning ideas into fluid, reliable, and beautifully engineered digital experiences. With a strong foundation in MERN, backend systems, AI fundamentals, and cloud-native architecture, I build products that scale effortlessly and feel great to use. I thrive at the intersection of design and engineering — crafting systems that are both thoughtful and technically robust.
           </motion.p>
@@ -164,7 +164,7 @@ export default function LandingPage() {
           <motion.div
             variants={itemVariants}
             style={{ opacity: buttonOpacity }}
-            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 pt-6"
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 pt-4 sm:pt-6 px-2"
           >
             <a
               href="#contact"
@@ -172,29 +172,29 @@ export default function LandingPage() {
                 e.preventDefault()
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
               }}
-              className="group relative inline-flex items-center gap-2 px-8 py-4 bg-white/90 text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-[1.03] shadow-[0_0_35px_10px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_15px_rgba(255,255,255,0.25)]"
+              className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] bg-white/90 text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-[1.03] shadow-[0_0_35px_10px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_15px_rgba(255,255,255,0.25)]"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 Contact Me
-                <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </span>
             </a>
 
             <a
               href="/resume/Aryan_Tiwari.pdf"
               download
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
+              className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
             >
               Download Resume
-              <Download size={20} className="transition-transform group-hover:translate-y-1" />
+              <Download size={18} className="transition-transform group-hover:translate-y-1" />
             </a>
 
             <Link
               to="/projects"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
+              className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] bg-white/7 backdrop-blur-xl border border-white/10 text-white font-medium rounded-full transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/20 hover:shadow-xl"
             >
               View Projects
-              <Code2 size={20} className="transition-transform group-hover:rotate-12" />
+              <Code2 size={18} className="transition-transform group-hover:rotate-12" />
             </Link>
           </motion.div>
 

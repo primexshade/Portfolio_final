@@ -22,18 +22,18 @@ export default function Footer() {
       {/* Gradient divider */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-7 py-2 space-y-1.5">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 space-y-1.5 sm:space-y-2">
         {/* Main footer content */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
+        <div className="flex flex-col gap-3 sm:gap-4 text-xs sm:text-sm">
           {/* Copyright */}
-          <div className="flex items-center gap-1.5 text-text/60">
-            <span>© {year} Built with</span>
-            <Heart size={10} className="text-red-400 animate-pulse" fill="currentColor" />
-            <span>by Aryan Tiwari</span>
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1 text-text/60 order-3 sm:order-1">
+            <span className="whitespace-nowrap">© {year} Built with</span>
+            <Heart size={10} className="text-red-400 animate-pulse flex-shrink-0" fill="currentColor" />
+            <span className="whitespace-nowrap">by Aryan Tiwari</span>
           </div>
 
           {/* Social links */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 order-1 sm:order-2">
             {socialLinks.map((social, i) => (
               <motion.a
                 key={social.label}
@@ -44,32 +44,32 @@ export default function Footer() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.1, y: -2 }}
-                className="p-1.5 rounded-lg bg-white/5 hover:bg-accent/10 hover:text-accent border border-white/10 hover:border-accent/30 transition-all"
+                className="p-1.5 sm:p-2 rounded-lg bg-white/5 hover:bg-accent/10 hover:text-accent border border-white/10 hover:border-accent/30 transition-all flex-shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
                 aria-label={social.label}
               >
-                <social.icon size={14} />
+                <social.icon size={14} className="sm:w-4 sm:h-4" />
               </motion.a>
             ))}
           </div>
 
           {/* Quick links */}
-          <div className="flex items-center gap-2 text-text/60">
-            <Link to="/projects" className="hover:text-accent transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-text/60 order-2 sm:order-3">
+            <Link to="/projects" className="hover:text-accent transition-colors whitespace-nowrap">
               Work
             </Link>
             <span className="w-px h-3 bg-white/10" />
-            <Link to="/about" className="hover:text-accent transition-colors">
+            <Link to="/about" className="hover:text-accent transition-colors whitespace-nowrap">
               About
             </Link>
             <span className="w-px h-3 bg-white/10" />
-            <a href="/Aryan_Tiwari.pdf" className="hover:text-accent transition-colors" download>
+            <a href="/Aryan_Tiwari.pdf" className="hover:text-accent transition-colors whitespace-nowrap" download>
               Resume
             </a>
           </div>
         </div>
 
         {/* Tech stack badge */}
-        <div className="text-center text-[11px] text-text/40 pt-1 border-t border-white/5">
+        <div className="text-center text-[10px] sm:text-[11px] text-text/40 pt-2 sm:pt-3 border-t border-white/5">
           Built with Node.js, Express, MongoDB, React, Tailwind · Tools: Git, Firebase
         </div>
       </div>

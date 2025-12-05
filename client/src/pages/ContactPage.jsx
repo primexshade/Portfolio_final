@@ -58,8 +58,8 @@ export default function ContactPage() {
         resolutionScale: 0.5
       }}
     >
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 min-h-screen relative z-20">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 md:px-6 lg:px-8 min-h-screen relative z-20">
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10 md:space-y-12">
           {/* Header with parallax */}
           <motion.div
             ref={headerRef}
@@ -99,39 +99,39 @@ export default function ContactPage() {
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/5 via-white/0 to-transparent" />
             
             {/* Content */}
-            <div className="relative p-8 md:p-12 lg:p-16">
-              <div className="grid lg:grid-cols-5 gap-8 md:gap-10">
+            <div className="relative p-3 sm:p-4 md:p-6 lg:p-8">
+              <div className="grid lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
                 {/* Contact Info */}
                 <motion.div
                   initial={{ opacity: 0, x: -40 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="lg:col-span-2 space-y-6 sm:space-y-8"
+                  className="lg:col-span-2 space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 min-w-0 w-full"
                 >
                   {/* Info card */}
-                  <div className="bg-white/5 backdrop-blur-xl rounded-[24px] p-6 sm:p-8 border border-white/10 shadow-xl space-y-6 sm:space-y-8">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-xl sm:text-2xl text-white">Get in Touch</h3>
-                      <p className="text-sm sm:text-base text-white/70">
+                  <div className="bg-white/5 backdrop-blur-xl rounded-lg sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-white/10 shadow-xl space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
+                    <div className="space-y-1.5 sm:space-y-2 md:space-y-3">
+                      <h3 className="font-semibold text-base sm:text-lg md:text-xl lg:text-2xl text-white">Get in Touch</h3>
+                      <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed">
                         I'm always open to discussing new projects, creative ideas, or opportunities.
                       </p>
                     </div>
 
-                    <div className="space-y-5">
+                    <div className="space-y-3 sm:space-y-4">
                       <a
                         href="mailto:aaryan.tiwari54@gmail.com"
-                        className="flex items-center gap-4 text-white/80 hover:text-[#6EE7FF] transition-colors group"
+                        className="flex items-center gap-2 sm:gap-3 md:gap-4 text-white/80 hover:text-[#6EE7FF] transition-colors group min-w-0"
                       >
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                          <Mail size={20} className="sm:w-6 sm:h-6 text-[#6EE7FF]" />
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl md:rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-colors flex-shrink-0">
+                          <Mail size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#6EE7FF]" />
                         </div>
-                        <span className="text-sm sm:text-base">aaryan.tiwari54@gmail.com</span>
+                        <span className="text-xs sm:text-sm md:text-base truncate">aaryan.tiwari54@gmail.com</span>
                       </a>
                     </div>
 
-                    <div className="pt-6 sm:pt-8 border-t border-white/10">
-                      <p className="text-sm sm:text-base text-white/70 mb-4 sm:mb-5">Connect with me</p>
-                      <div className="flex gap-3 sm:gap-4">
+                    <div className="pt-3 sm:pt-4 md:pt-5 lg:pt-6 border-t border-white/10">
+                      <p className="text-xs sm:text-sm md:text-base text-white/70 mb-2 sm:mb-3 md:mb-4">Connect with me</p>
+                      <div className="flex flex-wrap gap-2 sm:gap-3">
                         {socialLinks.map((social) => (
                           <motion.a
                             key={social.label}
@@ -140,10 +140,10 @@ export default function ContactPage() {
                             rel="noreferrer"
                             whileHover={{ scale: 1.1, y: -4 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 hover:border-white/30 flex items-center justify-center transition-all hover:text-[#6EE7FF] shadow-lg"
+                            className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl md:rounded-2xl bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 hover:border-white/30 flex items-center justify-center transition-all hover:text-[#6EE7FF] shadow-lg flex-shrink-0"
                             aria-label={social.label}
                           >
-                            <social.icon size={20} className="sm:w-[22px] sm:h-[22px]" />
+                            <social.icon size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
                           </motion.a>
                         ))}
                       </div>
@@ -169,13 +169,13 @@ export default function ContactPage() {
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="lg:col-span-3 bg-white/5 backdrop-blur-xl rounded-[24px] p-8 sm:p-10 border border-white/10 shadow-xl space-y-6 sm:space-y-8"
+                  className="lg:col-span-3 bg-white/5 backdrop-blur-xl rounded-lg sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-white/10 shadow-xl space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 min-w-0 w-full"
                 >
                   {/* Name Field */}
                   <div className="relative">
                     <User
-                      size={20}
-                      className={`absolute left-4 sm:left-5 top-4 sm:top-5 transition-colors ${
+                      size={16}
+                      className={`absolute left-2.5 sm:left-3 md:left-4 top-2.5 sm:top-3 md:top-4 transition-colors text-sm sm:text-base ${
                         focused.name || form.name ? 'text-[#6EE7FF]' : 'text-white/40'
                       }`}
                     />
@@ -186,7 +186,7 @@ export default function ContactPage() {
                       onFocus={() => setFocused({ ...focused, name: true })}
                       onBlur={() => setFocused({ ...focused, name: false })}
                       required
-                      className="w-full pl-12 sm:pl-14 pr-4 sm:pr-5 py-3.5 sm:py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all text-sm sm:text-base shadow-lg"
+                      className="w-full pl-8 sm:pl-9 md:pl-10 pr-2.5 sm:pr-3 md:pr-4 py-2.5 sm:py-3 md:py-3.5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg sm:rounded-xl md:rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all text-xs sm:text-sm md:text-base shadow-lg min-h-[44px]"
                       placeholder="Your name"
                     />
                   </div>
@@ -194,8 +194,8 @@ export default function ContactPage() {
                   {/* Email Field */}
                   <div className="relative">
                     <Mail
-                      size={20}
-                      className={`absolute left-4 sm:left-5 top-4 sm:top-5 transition-colors ${
+                      size={16}
+                      className={`absolute left-2.5 sm:left-3 md:left-4 top-2.5 sm:top-3 md:top-4 transition-colors text-sm sm:text-base ${
                         focused.email || form.email ? 'text-[#6EE7FF]' : 'text-white/40'
                       }`}
                     />
@@ -206,7 +206,7 @@ export default function ContactPage() {
                       onFocus={() => setFocused({ ...focused, email: true })}
                       onBlur={() => setFocused({ ...focused, email: false })}
                       required
-                      className="w-full pl-12 sm:pl-14 pr-4 sm:pr-5 py-3.5 sm:py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all text-sm sm:text-base shadow-lg"
+                      className="w-full pl-8 sm:pl-9 md:pl-10 pr-2.5 sm:pr-3 md:pr-4 py-2.5 sm:py-3 md:py-3.5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg sm:rounded-xl md:rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all text-xs sm:text-sm md:text-base shadow-lg min-h-[44px]"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -214,19 +214,19 @@ export default function ContactPage() {
                   {/* Message Field */}
                   <div className="relative">
                     <MessageSquare
-                      size={20}
-                      className={`absolute left-4 sm:left-5 top-4 sm:top-5 transition-colors ${
+                      size={16}
+                      className={`absolute left-2.5 sm:left-3 md:left-4 top-2.5 sm:top-3 md:top-4 transition-colors text-sm sm:text-base ${
                         focused.message || form.message ? 'text-[#6EE7FF]' : 'text-white/40'
                       }`}
                     />
                     <textarea
-                      rows="6"
+                      rows={3}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       onFocus={() => setFocused({ ...focused, message: true })}
                       onBlur={() => setFocused({ ...focused, message: false })}
                       required
-                      className="w-full pl-12 sm:pl-14 pr-4 sm:pr-5 py-3.5 sm:py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all resize-none text-sm sm:text-base shadow-lg"
+                      className="w-full pl-8 sm:pl-9 md:pl-10 pr-2.5 sm:pr-3 md:pr-4 py-2.5 sm:py-3 md:py-3.5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg sm:rounded-xl md:rounded-2xl outline-none focus:border-white/30 focus:bg-white/10 transition-all resize-none text-xs sm:text-sm md:text-base shadow-lg min-h-[100px] sm:min-h-[120px]"
                       placeholder="Tell me about your project..."
                     />
                   </div>
@@ -237,21 +237,21 @@ export default function ContactPage() {
                     disabled={loading}
                     whileHover={{ scale: loading ? 1 : 1.02 }}
                     whileTap={{ scale: loading ? 1 : 0.98 }}
-                    className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl py-3.5 sm:py-4 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(110,231,255,0.2)] hover:shadow-[0_0_40px_rgba(110,231,255,0.4)] hover:bg-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
+                    className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-xl md:rounded-2xl py-2.5 sm:py-3 md:py-3.5 flex items-center justify-center gap-2 sm:gap-3 shadow-[0_0_30px_rgba(110,231,255,0.2)] hover:shadow-[0_0_40px_rgba(110,231,255,0.4)] hover:bg-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm md:text-base font-medium min-h-[44px]"
                   >
                     {loading ? (
                       <>
                         <motion.div
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                          className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-white/30 border-t-white rounded-full"
+                          className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full"
                         />
-                        Sending...
+                        <span className="text-xs sm:text-sm">Sending...</span>
                       </>
                     ) : (
                       <>
-                        <Send size={18} className="sm:w-5 sm:h-5" />
-                        Send Message
+                        <Send size={16} className="sm:w-5 sm:h-5 flex-shrink-0" />
+                        <span className="whitespace-nowrap">Send Message</span>
                       </>
                     )}
                   </motion.button>
@@ -263,12 +263,12 @@ export default function ContactPage() {
                         initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="p-4 sm:p-5 bg-green-500/10 backdrop-blur-xl border border-green-500/20 rounded-2xl flex items-start sm:items-center gap-3 sm:gap-4"
+                        className="p-2.5 sm:p-3 md:p-4 bg-green-500/10 backdrop-blur-xl border border-green-500/20 rounded-lg sm:rounded-xl md:rounded-2xl flex items-start gap-2 sm:gap-3 md:gap-4"
                       >
-                        <CheckCircle size={22} className="sm:w-6 sm:h-6 text-green-400 flex-shrink-0 mt-0.5 sm:mt-0" />
-                        <div>
-                          <p className="text-green-400 font-medium text-sm sm:text-base">Message sent successfully! 🎉</p>
-                          <p className="text-white/60 text-xs sm:text-sm mt-1">I'll get back to you shortly.</p>
+                        <CheckCircle size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-400 flex-shrink-0 mt-0.5" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-green-400 font-medium text-xs sm:text-sm md:text-base leading-tight">Message sent successfully! 🎉</p>
+                          <p className="text-white/60 text-xs leading-tight mt-0.5 sm:mt-1">I'll get back to you shortly.</p>
                         </div>
                       </motion.div>
                     )}
@@ -281,9 +281,9 @@ export default function ContactPage() {
                         initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="p-4 sm:p-5 bg-red-500/10 backdrop-blur-xl border border-red-500/20 rounded-2xl"
+                        className="p-2.5 sm:p-3 md:p-4 bg-red-500/10 backdrop-blur-xl border border-red-500/20 rounded-lg sm:rounded-xl md:rounded-2xl"
                       >
-                        <p className="text-red-400 text-sm sm:text-base">{error}</p>
+                        <p className="text-red-400 text-xs sm:text-sm md:text-base leading-tight">{error}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

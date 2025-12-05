@@ -70,11 +70,11 @@ export default function CombinedStatsSection() {
             >
               <div className="relative inline-block">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 blur-3xl opacity-40" />
-                <h2 className="relative text-4xl sm:text-5xl md:text-6xl font-semibold bg-gradient-to-r from-white via-white/70 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_80px_rgba(110,231,255,0.3)] pb-1 leading-tight">
+                <h2 className="relative text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold bg-gradient-to-r from-white via-white/70 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_80px_rgba(110,231,255,0.3)] pb-1 leading-tight">
                   Coding Journey
                 </h2>
               </div>
-              <p className="text-white/60 text-base sm:text-lg max-w-2xl mx-auto">
+              <p className="text-white/60 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2">
                 My contributions and problem-solving achievements across platforms
               </p>
             </motion.div>
