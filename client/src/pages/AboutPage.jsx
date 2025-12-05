@@ -3,6 +3,7 @@ import { Briefcase, GraduationCap, Download, Award, Code2 } from 'lucide-react'
 import { useRef } from 'react'
 import VisionProLayout from '../layouts/VisionProLayout'
 import { PERSONAL_DATA } from '../utils/constants'
+import { getSkillIcon, getSkillColor } from '../utils/skillIcons'
 
 /** About page with Vision Pro aesthetic - timeline, gradient avatar, and animated skills */
 export default function AboutPage() {
@@ -168,19 +169,24 @@ export default function AboutPage() {
                 <span>Tech Stack</span>
               </h3>
               <div className="flex flex-wrap gap-1.5 sm:gap-2 lg:gap-3">
-                {skills.map((skill, i) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05, duration: 0.4 }}
-                    whileHover={{ scale: 1.1, y: -3 }}
-                    className="px-2 sm:px-3 lg:px-5 py-1 sm:py-1.5 lg:py-2.5 bg-white/7 border border-white/10 text-white/90 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 hover:border-accent/30 hover:text-white transition-all cursor-default shadow-lg whitespace-nowrap"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
+                {skills.map((skill, i) => {
+                  const IconComponent = getSkillIcon(skill)
+                  const colorClass = getSkillColor(skill)
+                  return (
+                    <motion.div
+                      key={skill}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05, duration: 0.4 }}
+                      whileHover={{ scale: 1.1, y: -3 }}
+                      className="px-2 sm:px-3 lg:px-5 py-1 sm:py-1.5 lg:py-2.5 bg-white/7 border border-white/10 text-white/90 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 hover:border-accent/30 hover:text-white transition-all cursor-default shadow-lg whitespace-nowrap flex items-center gap-1.5"
+                    >
+                      <IconComponent size={16} className={colorClass} />
+                      <span>{skill}</span>
+                    </motion.div>
+                  )
+                })}
               </div>
             </div>
           </motion.div>

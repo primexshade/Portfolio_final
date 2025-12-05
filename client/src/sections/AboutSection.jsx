@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Code2, Trophy, Briefcase, GraduationCap, Download, Target } from 'lucide-react'
 import { useRef } from 'react'
 import { PERSONAL_DATA, SKILLS, EXPERIENCE, ACHIEVEMENTS, EDUCATION } from '../utils/constants'
+import { getSkillIcon, getSkillColor } from '../utils/skillIcons'
 
 /** Liquid Glass About section for landing page with official resume data */
 export default function AboutSection() {
@@ -173,19 +174,24 @@ export default function AboutSection() {
                     <div>
                       <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Languages</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.languages.map((skill, i) => (
-                          <motion.span
-                            key={skill}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap"
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                        {SKILLS.languages.map((skill, i) => {
+                          const IconComponent = getSkillIcon(skill)
+                          const colorClass = getSkillColor(skill)
+                          return (
+                            <motion.div
+                              key={skill}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap flex items-center gap-1.5"
+                            >
+                              <IconComponent size={14} className={colorClass} />
+                              <span>{skill}</span>
+                            </motion.div>
+                          )
+                        })}
                       </div>
                     </div>
 
@@ -193,19 +199,24 @@ export default function AboutSection() {
                     <div>
                       <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Frameworks & Libraries</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.frameworks.map((skill, i) => (
-                          <motion.span
-                            key={skill}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap"
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                        {SKILLS.frameworks.map((skill, i) => {
+                          const IconComponent = getSkillIcon(skill)
+                          const colorClass = getSkillColor(skill)
+                          return (
+                            <motion.div
+                              key={skill}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap flex items-center gap-1.5"
+                            >
+                              <IconComponent size={14} className={colorClass} />
+                              <span>{skill}</span>
+                            </motion.div>
+                          )
+                        })}
                       </div>
                     </div>
 
@@ -213,19 +224,24 @@ export default function AboutSection() {
                     <div>
                       <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Databases</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.databases.map((skill, i) => (
-                          <motion.span
-                            key={skill}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap"
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                        {SKILLS.databases.map((skill, i) => {
+                          const IconComponent = getSkillIcon(skill)
+                          const colorClass = getSkillColor(skill)
+                          return (
+                            <motion.div
+                              key={skill}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap flex items-center gap-1.5"
+                            >
+                              <IconComponent size={14} className={colorClass} />
+                              <span>{skill}</span>
+                            </motion.div>
+                          )
+                        })}
                       </div>
                     </div>
 
@@ -233,19 +249,24 @@ export default function AboutSection() {
                     <div>
                       <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Tools</h4>
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                        {SKILLS.tools.map((skill, i) => (
-                          <motion.span
-                            key={skill}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap"
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                        {SKILLS.tools.map((skill, i) => {
+                          const IconComponent = getSkillIcon(skill)
+                          const colorClass = getSkillColor(skill)
+                          return (
+                            <motion.div
+                              key={skill}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/7 border border-white/10 text-white/90 rounded-lg text-xs font-medium hover:bg-white/10 hover:border-accent/30 transition-all cursor-default whitespace-nowrap flex items-center gap-1.5"
+                            >
+                              <IconComponent size={14} className={colorClass} />
+                              <span>{skill}</span>
+                            </motion.div>
+                          )
+                        })}
                       </div>
                     </div>
                   </div>
