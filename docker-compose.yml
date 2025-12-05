@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # Frontend React app
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    container_name: portfolio-frontend
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+    depends_on:
+      - backend
+    environment:
+      - VITE_SENTRY_DSN=${VITE_SENTRY_DSN}
+
+  # Backend Node.js server
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    container_name: portfolio-backend
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+    depends_on:
+      - mongodb
+    environment:
+      - PORT=5001
+      - MONGODB_URI=mongodb://mongodb:27017/portfolio
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # MongoDB database
+  mongodb:
+    image: mongo:7-alpine
+    container_name: portfolio-mongodb
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-config:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_INITDB_DATABASE=portfolio
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: portfolio-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - portfolio-network
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend
+      - backend
+
+networks:
+  portfolio-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-config:
+    driver: local
