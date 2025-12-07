@@ -1,7 +1,4 @@
 {
-  "buildCommand": "npm --prefix client run build",
-  "installCommand": "npm --prefix client install",
-  "outputDirectory": "client/dist",
   "headers": [
     {
       "source": "/(.*)",
