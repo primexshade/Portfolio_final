@@ -2,9 +2,6 @@
   "version": 2,
   "buildCommand": "cd client && npm run build",
   "outputDirectory": "client/dist",
-  "env": {
-    "VITE_SENTRY_DSN": "@vite_sentry_dsn"
-  },
   "headers": [
     {
       "source": "/(.*)",
