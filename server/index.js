@@ -21,8 +21,6 @@ if (process.env.SENTRY_DSN) {
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
     sampleRate: 1.0,
     integrations: [
-      new Sentry.Integrations.Http({ tracing: true }),
-      new Sentry.Integrations.Express({ app: true, request: true }),
       nodeProfilingIntegration(),
     ],
     debug: process.env.NODE_ENV !== 'production',
