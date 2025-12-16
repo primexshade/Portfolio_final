@@ -35,11 +35,6 @@ console.log("🔍 SENTRY_DSN:", process.env.SENTRY_DSN ? '✅ Configured' : '⚠
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// Sentry middleware must be first
-if (process.env.SENTRY_DSN) {
-  app.use(Sentry.Handlers.requestHandler())
-}
-
 // Security & basics
 app.use(helmet())
 app.use(cors({ origin: process.env.CLIENT_ORIGIN?.split(',') || '*', credentials: true }))
@@ -129,11 +124,6 @@ app.get('/api/leetcode', async (req, res, next) => {
     res.json(transformedData)
   } catch (err) { next(err) }
 })
-
-// Sentry error handler (must be after all other middleware/routes)
-if (process.env.SENTRY_DSN) {
-  app.use(Sentry.Handlers.errorHandler())
-}
 
 // Error handler
 app.use(errorHandler)
